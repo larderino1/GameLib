@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/GameLib_Front/Properties
+/GameLib_Front/appsettings.Development.json
+/GameLib_Front/appsettings.json
