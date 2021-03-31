@@ -53,5 +53,10 @@ namespace GameLib_Back
                 endpoints.MapControllers();
             });
         }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+
+        }
     }
 }
