@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbManager", "DbManager\DbMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameLib_Front", "GameLib_Front\GameLib_Front.csproj", "{0074B99D-3569-40CE-AEEF-5B39A9FD0F0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLib_Back", "GameLib_Back\GameLib_Back.csproj", "{C20F10D8-AF73-401D-A824-BBEEF3476BA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0074B99D-3569-40CE-AEEF-5B39A9FD0F0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0074B99D-3569-40CE-AEEF-5B39A9FD0F0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0074B99D-3569-40CE-AEEF-5B39A9FD0F0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C20F10D8-AF73-401D-A824-BBEEF3476BA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C20F10D8-AF73-401D-A824-BBEEF3476BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C20F10D8-AF73-401D-A824-BBEEF3476BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C20F10D8-AF73-401D-A824-BBEEF3476BA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
