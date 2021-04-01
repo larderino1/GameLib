@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DbManager.Data;
 using DbManager.Models;
+using GameLib_Back.Services.GameServices;
 
 namespace GameLib_Back.Controllers
 {
@@ -14,25 +15,32 @@ namespace GameLib_Back.Controllers
     [ApiController]
     public class GamesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IGameServices _gamesService;
 
-        public GamesController(ApplicationDbContext context)
+        public GamesController(IGameServices gamesService)
         {
-            _context = context;
+            _gamesService = gamesService;
         }
 
         // GET: api/Games
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Game>>> GetGames()
         {
-            return await _context.Games.ToListAsync();
+            var games = await _gamesService.GetGameListAsync();
+
+            if(games == null || games.Count() == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(games);
         }
 
         // GET: api/Games/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGame(Guid id)
         {
-            var game = await _context.Games.FindAsync(id);
+            var game = await _gamesService.GetGameByIdAsync(id);
 
             if (game == null)
             {
@@ -43,8 +51,6 @@ namespace GameLib_Back.Controllers
         }
 
         // PUT: api/Games/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGame(Guid id, Game game)
         {
@@ -53,22 +59,13 @@ namespace GameLib_Back.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(game).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _gamesService.UpdateGameAsync(id, game);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (ArgumentNullException ex)
             {
-                if (!GameExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound(ex.Message);
             }
 
             return NoContent();
@@ -80,8 +77,14 @@ namespace GameLib_Back.Controllers
         [HttpPost]
         public async Task<ActionResult<Game>> PostGame(Game game)
         {
-            _context.Games.Add(game);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _gamesService.CreateGameAsync(game);
+            }
+            catch(ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return CreatedAtAction("GetGame", new { id = game.Id }, game);
         }
@@ -90,21 +93,14 @@ namespace GameLib_Back.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Game>> DeleteGame(Guid id)
         {
-            var game = await _context.Games.FindAsync(id);
+            var game = await _gamesService.DeleteGameAsync(id);
+
             if (game == null)
             {
                 return NotFound();
             }
 
-            _context.Games.Remove(game);
-            await _context.SaveChangesAsync();
-
             return game;
-        }
-
-        private bool GameExists(Guid id)
-        {
-            return _context.Games.Any(e => e.Id == id);
         }
     }
 }

@@ -14,8 +14,8 @@ namespace GameLib_Back.Services.CategoryServices
 
         Task UpdateCategoryAsync(Guid id, Category category);
 
-        Task CreateCategoryAsync(Category category);
+        Task<Category> CreateCategoryAsync(Category category);
 
-        Task DeleteCategoryAsync(Guid id);
+        Task<Category> DeleteCategoryAsync(Guid id);
     }
 }

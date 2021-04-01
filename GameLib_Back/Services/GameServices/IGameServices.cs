@@ -14,16 +14,8 @@ namespace GameLib_Back.Services.GameServices
 
         Task UpdateGameAsync(Guid id, Game game);
 
-        Task CreateGameAsync(Game game);
+        Task<Game> CreateGameAsync(Game game);
 
-        Task DeleteGameAsync(Guid id);
-
-        Task<IEnumerable<Game>> GetGamesByCategoryAsync(Guid categoryId);
-
-        Task<IEnumerable<Game>> GetGamesByGenreAsync(Guid genreId);
-
-        Task<IEnumerable<Game>> GetGamesByModeAsync(Guid modeId);
-
-        Task<IEnumerable<Game>> GetGamesByplatformAsync(Guid categoryId);
+        Task<Game> DeleteGameAsync(Guid id);
     }
 }

@@ -14,8 +14,8 @@ namespace GameLib_Back.Services.GenreServices
 
         Task UpdateGenreAsync(Guid id, Genre genre);
 
-        Task CreateGenreAsync(Genre genre);
+        Task<Genre> CreateGenreAsync(Genre genre);
 
-        Task DeleteGenreAsync(Guid id);
+        Task<Genre> DeleteGenreAsync(Guid id);
     }
 }

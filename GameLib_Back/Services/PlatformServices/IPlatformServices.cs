@@ -14,8 +14,8 @@ namespace GameLib_Back.Services.PlatformServices
 
         Task UpdatePlatformAsync(Guid id, Platform platform);
 
-        Task CreatePlatformAsync(Platform platform);
+        Task<Platform> CreatePlatformAsync(Platform platform);
 
-        Task DeletePlatformAsync(Guid id);
+        Task<Platform> DeletePlatformAsync(Guid id);
     }
 }

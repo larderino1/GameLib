@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DbManager.Data;
 using DbManager.Models;
+using GameLib_Back.Services.PlatformServices;
 
 namespace GameLib_Back.Controllers
 {
@@ -14,25 +15,32 @@ namespace GameLib_Back.Controllers
     [ApiController]
     public class PlatformsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IPlatformServices _platformService;
 
-        public PlatformsController(ApplicationDbContext context)
+        public PlatformsController(IPlatformServices platformService)
         {
-            _context = context;
+            _platformService = platformService;
         }
 
         // GET: api/Platforms
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Platform>>> GetPlatforms()
         {
-            return await _context.Platforms.ToListAsync();
+            var platforms = await _platformService.GetPlatformsListAsync();
+
+            if (platforms == null || platforms.Count() == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(platforms);
         }
 
         // GET: api/Platforms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Platform>> GetPlatform(Guid id)
         {
-            var platform = await _context.Platforms.FindAsync(id);
+            var platform = await _platformService.GetPlatformByIdAsync(id);
 
             if (platform == null)
             {
@@ -43,8 +51,6 @@ namespace GameLib_Back.Controllers
         }
 
         // PUT: api/Platforms/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPlatform(Guid id, Platform platform)
         {
@@ -53,35 +59,30 @@ namespace GameLib_Back.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(platform).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _platformService.UpdatePlatformAsync(id, platform);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (ArgumentNullException ex)
             {
-                if (!PlatformExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound(ex.Message);
             }
 
             return NoContent();
         }
 
         // POST: api/Platforms
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Platform>> PostPlatform(Platform platform)
         {
-            _context.Platforms.Add(platform);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _platformService.CreatePlatformAsync(platform);
+            }
+            catch(ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return CreatedAtAction("GetPlatform", new { id = platform.Id }, platform);
         }
@@ -90,21 +91,14 @@ namespace GameLib_Back.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Platform>> DeletePlatform(Guid id)
         {
-            var platform = await _context.Platforms.FindAsync(id);
+            var platform = await _platformService.DeletePlatformAsync(id);
+
             if (platform == null)
             {
                 return NotFound();
             }
 
-            _context.Platforms.Remove(platform);
-            await _context.SaveChangesAsync();
-
             return platform;
-        }
-
-        private bool PlatformExists(Guid id)
-        {
-            return _context.Platforms.Any(e => e.Id == id);
         }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DbManager.Data;
 using DbManager.Models;
+using GameLib_Back.Services.ModeServices;
 
 namespace GameLib_Back.Controllers
 {
@@ -14,25 +15,32 @@ namespace GameLib_Back.Controllers
     [ApiController]
     public class ModesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IModeServices _modeService;
 
-        public ModesController(ApplicationDbContext context)
+        public ModesController(IModeServices modeService)
         {
-            _context = context;
+            _modeService = modeService;
         }
 
         // GET: api/Modes
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Mode>>> GetModes()
         {
-            return await _context.Modes.ToListAsync();
+            var modes = await _modeService.GetModeListAsync();
+
+            if (modes == null || modes.Count() == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(modes);
         }
 
         // GET: api/Modes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Mode>> GetMode(Guid id)
         {
-            var mode = await _context.Modes.FindAsync(id);
+            var mode = await _modeService.GetModeByIdAsync(id);
 
             if (mode == null)
             {
@@ -43,8 +51,6 @@ namespace GameLib_Back.Controllers
         }
 
         // PUT: api/Modes/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMode(Guid id, Mode mode)
         {
@@ -53,35 +59,30 @@ namespace GameLib_Back.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(mode).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _modeService.UpdateModeAsync(id, mode);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (ArgumentNullException ex)
             {
-                if (!ModeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound(ex.Message);
             }
 
             return NoContent();
         }
 
         // POST: api/Modes
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Mode>> PostMode(Mode mode)
         {
-            _context.Modes.Add(mode);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _modeService.CreateModeAsync(mode);
+            }
+            catch(ArgumentNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return CreatedAtAction("GetMode", new { id = mode.Id }, mode);
         }
@@ -90,21 +91,14 @@ namespace GameLib_Back.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Mode>> DeleteMode(Guid id)
         {
-            var mode = await _context.Modes.FindAsync(id);
+            var mode = await _modeService.DeleteModeAsync(id);
+
             if (mode == null)
             {
                 return NotFound();
             }
 
-            _context.Modes.Remove(mode);
-            await _context.SaveChangesAsync();
-
             return mode;
-        }
-
-        private bool ModeExists(Guid id)
-        {
-            return _context.Modes.Any(e => e.Id == id);
         }
     }
 }

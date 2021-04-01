@@ -14,8 +14,8 @@ namespace GameLib_Back.Services.ModeServices
 
         Task UpdateModeAsync(Guid id, Mode mode);
 
-        Task CreateModeAsync(Mode mode);
+        Task<Mode> CreateModeAsync(Mode mode);
 
-        Task DeleteModeAsync(Guid id);
+        Task<Mode> DeleteModeAsync(Guid id);
     }
 }

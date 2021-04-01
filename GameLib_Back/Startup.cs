@@ -1,4 +1,9 @@
 using DbManager.Data;
+using GameLib_Back.Services.CategoryServices;
+using GameLib_Back.Services.GameServices;
+using GameLib_Back.Services.GenreServices;
+using GameLib_Back.Services.ModeServices;
+using GameLib_Back.Services.PlatformServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +36,8 @@ namespace GameLib_Back
                 options.UseSqlServer(
                     Configuration.GetConnectionString("AzureSqlDbConnectionString")));
 
+            RegisterServices(services);
+
             services.AddControllers();
         }
 
@@ -56,7 +63,11 @@ namespace GameLib_Back
 
         private void RegisterServices(IServiceCollection services)
         {
-
+            services.AddScoped<IGameServices, GameServices>();
+            services.AddScoped<ICategoryServices, CategoryServices>();
+            services.AddScoped<IModeServices, ModeServices>();
+            services.AddScoped<IPlatformServices, PlatformServices>();
+            services.AddScoped<IGenreServices, GenreServices>();
         }
     }
 }
