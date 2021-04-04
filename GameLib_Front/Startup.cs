@@ -1,4 +1,9 @@
 using GameLib_Front.Data;
+using GameLib_Front.Services.CategoryServices;
+using GameLib_Front.Services.GameServices;
+using GameLib_Front.Services.GenreServices;
+using GameLib_Front.Services.ModeServices;
+using GameLib_Front.Services.PlatformServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +37,11 @@ namespace GameLib_Front
                     Configuration.GetConnectionString("UserDataDbConnectionString")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<UserDataDbContext>();
+
+            services.AddHttpClient();
+
+            RegisterServices(services);
+
             services.AddRazorPages();
         }
 
@@ -62,6 +72,15 @@ namespace GameLib_Front
             {
                 endpoints.MapRazorPages();
             });
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            services.AddScoped<IGameServices, GameServices>();
+            services.AddScoped<ICategoryServices, CategoryServices>();
+            services.AddScoped<IModeServices, ModeServices>();
+            services.AddScoped<IPlatformServices, PlatformServices>();
+            services.AddScoped<IGenreServices, GenreServices>();
         }
     }
 }

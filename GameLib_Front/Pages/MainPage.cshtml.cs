@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace GameLib_Front.Pages
 {
-    public class IndexModel : PageModel
+    public class MainPageModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<MainPageModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public MainPageModel(ILogger<MainPageModel> logger)
         {
             _logger = logger;
         }
