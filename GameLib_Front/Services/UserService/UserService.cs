@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GameLib_Front.Services.UserService
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly UserManager<IdentityUser> _userManager;
 
@@ -23,7 +23,7 @@ namespace GameLib_Front.Services.UserService
             await _userManager.DeleteAsync(user);
         }
 
-        public async Task<List<IdentityUser>> GetAllUsers()
+        public async Task<IEnumerable<IdentityUser>> GetAllUsers()
         {
             return await _userManager.Users.ToListAsync();
         }

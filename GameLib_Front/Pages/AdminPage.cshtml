@@ -11,7 +11,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>User login</th>
+                    <th>User email</th>
                     <th>Role</th>
                     <th>Actions</th>
                 </tr>
@@ -19,18 +20,21 @@
             <tbody>
                 @foreach (var user in Model.Users)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => user.UserName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => user.UserRole)
-                        </td>
-                        <td>
-                            <a asp-page="./DeleteUser" asp-route-name="@user.UserName">Delete</a>
-                            <a asp-page="./ChangeUserRole" asp-route-name="@user.UserName" asp-route-role="@user.UserRole">Change role</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => user.User.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => user.User.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => user.Role)
+                    </td>
+                    <td>
+                        <a asp-page="./DeleteUser" asp-route-name="@user.User.UserName">Delete</a>
+                        <a asp-page="./ChangeUserRole" asp-route-name="@user.User.UserName" asp-route-role="@user.Role">Change role</a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

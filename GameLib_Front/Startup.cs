@@ -4,6 +4,8 @@ using GameLib_Front.Services.GameServices;
 using GameLib_Front.Services.GenreServices;
 using GameLib_Front.Services.ModeServices;
 using GameLib_Front.Services.PlatformServices;
+using GameLib_Front.Services.RoleService;
+using GameLib_Front.Services.UserService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -81,6 +83,8 @@ namespace GameLib_Front
             services.AddScoped<IModeServices, ModeServices>();
             services.AddScoped<IPlatformServices, PlatformServices>();
             services.AddScoped<IGenreServices, GenreServices>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
         }
     }
 }

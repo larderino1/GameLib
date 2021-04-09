@@ -1,0 +1,19 @@
+﻿@page
+@model GameLib_Front.Pages.DeleteUserModel
+@{
+    ViewData["Title"] = "UserEdit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Delete User</h1>
+<div>
+    <form method="get">
+        <h3><strong>Are you sure want to delete @Model.HttpContext.User.Identity.Name ?</strong></h3>
+    </form>
+</div>
+<div>
+    <form method="post">
+        <input type="submit" asp-page-handler="DeleteUser" value="Delete" class="btn btn-danger" />
+        <a asp-page="./AdminPage">Back to List</a>
+    </form>
+</div>
