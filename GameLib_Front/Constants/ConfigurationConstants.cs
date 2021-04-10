@@ -14,5 +14,9 @@ namespace GameLib_Front.Constants
         public const string UserDataDbConnectionString = nameof(UserDataDbConnectionString);
 
         public const string GameLibServerUri = nameof(GameLibServerUri);
+
+        public const string SendGridKey = nameof(SendGridKey);
+
+        public const string OrganizationEmail = nameof(OrganizationEmail);
     }
 }

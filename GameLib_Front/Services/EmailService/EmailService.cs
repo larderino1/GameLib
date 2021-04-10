@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using GameLib_Front.Constants;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -20,15 +21,16 @@ namespace GameLib_Front.Services.EmailService
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var sendGridKey = _config.GetValue<string>("SendGridKey");
+            var sendGridKey = _config.GetConnectionString(ConfigurationConstants.SendGridKey);
+
+            var emailAddress = _config.GetConnectionString(ConfigurationConstants.OrganizationEmail);
 
             var client = new SendGridClient(sendGridKey);
 
             var message = new SendGridMessage
             {
-                From = new EmailAddress(),
+                From = new EmailAddress(emailAddress),
                 Subject = subject,
-                PlainTextContent = htmlMessage,
                 HtmlContent = htmlMessage
             };
 
