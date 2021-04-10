@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GameLib_Front.Constants;
 using GameLib_Front.Services.UserService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GameLib_Front.Pages
 {
+    [Authorize(Roles = RoleConstants.AdminRole)]
     public class DeleteUserModel : PageModel
     {
         private IUserService _userService;

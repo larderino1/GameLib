@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DbManager.Models;
+using GameLib_Front.Constants;
 using GameLib_Front.Data.Models;
 using GameLib_Front.Services.CategoryServices;
 using GameLib_Front.Services.GameServices;
@@ -11,12 +12,14 @@ using GameLib_Front.Services.GenreServices;
 using GameLib_Front.Services.ModeServices;
 using GameLib_Front.Services.PlatformServices;
 using GameLib_Front.Services.StorageServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GameLib_Front.Pages
 {
+    [Authorize(Roles = RoleConstants.AdminRole)]
     public class GameCreateModel : PageModel
     {
         [BindProperty]
