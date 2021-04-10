@@ -28,6 +28,11 @@ namespace GameLib_Front.Pages
         {
             Genres = await _genreService.GetGenreListAsync();
 
+            if (Genres == null)
+            {
+                Genres = new List<Genre>();
+            }
+
             if (!string.IsNullOrEmpty(SearchString))
             {
                 Genres = Genres.Where(s => s.Name.Contains(SearchString));

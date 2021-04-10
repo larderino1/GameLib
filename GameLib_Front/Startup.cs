@@ -40,7 +40,9 @@ namespace GameLib_Front
             services.AddDbContext<UserDataDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString(ConfigurationConstants.UserDataDbConnectionString)));
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<UserDataDbContext>();
 
             services.AddAzureClients(builder =>
@@ -52,6 +54,18 @@ namespace GameLib_Front
             services.AddHttpClient();
 
             RegisterServices(services);
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            CreateRoles(serviceProvider).GetAwaiter().GetResult();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole",
+                    policy => policy.RequireRole(RoleConstants.AdminRole));
+            });
+
+            services.AddAuthentication();
 
             services.AddRazorPages();
         }
@@ -95,6 +109,38 @@ namespace GameLib_Front
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IStorageService, StorageService>();
+        }
+
+        private async Task CreateRoles(IServiceProvider service)
+        {
+            var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = service.GetRequiredService<UserManager<IdentityUser>>();
+
+            string[] roles = { RoleConstants.AdminRole, RoleConstants.UserRole };
+
+            IdentityResult res;
+
+            foreach (var role in roles)
+            {
+                var isRoleExist = await roleManager.RoleExistsAsync(role);
+                if (!isRoleExist)
+                {
+                    res = await roleManager.CreateAsync(new IdentityRole(role));
+                }
+            }
+
+            var users = await userManager.Users.ToListAsync();
+            foreach (var user in users)
+            {
+                if (await userManager.IsInRoleAsync(user, RoleConstants.AdminRole))
+                {
+                    continue;
+                }
+                else
+                {
+                    await userManager.AddToRoleAsync(user, RoleConstants.UserRole);
+                }
+            }
         }
     }
 }

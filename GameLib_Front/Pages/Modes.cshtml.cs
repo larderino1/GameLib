@@ -28,6 +28,11 @@ namespace GameLib_Front.Pages
         {
             Modes = await _modeService.GetModeListAsync();
 
+            if (Modes == null)
+            {
+                Modes = new List<Mode>();
+            }
+
             if (!string.IsNullOrEmpty(SearchString))
             {
                 Modes = Modes.Where(s => s.Name.Contains(SearchString));

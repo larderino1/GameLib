@@ -28,6 +28,11 @@ namespace GameLib_Front.Pages
         {
             Games = await _gameService.GetGameListAsync();
 
+            if (Games == null)
+            {
+                Games = new List<Game>();
+            }
+
             if (!string.IsNullOrEmpty(SearchString))
             {
                 Games = Games.Where(

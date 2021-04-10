@@ -28,6 +28,11 @@ namespace GameLib_Front.Pages
         {
             Platforms = await _platformService.GetPlatformsListAsync();
 
+            if(Platforms == null)
+            {
+                Platforms = new List<Platform>();
+            }
+
             if (!string.IsNullOrEmpty(SearchString))
             {
                 Platforms = Platforms.Where(s => s.Name.Contains(SearchString));
