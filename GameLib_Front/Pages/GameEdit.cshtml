@@ -1,0 +1,76 @@
+﻿@page
+@model GameLib_Front.Pages.GameEditModel
+@{
+    ViewData["Title"] = "Edit Game";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<h1>Edit Game</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Game.Name" class="control-label"></label>
+                <input asp-for="Game.Name" class="form-control" />
+                <span asp-validation-for="Game.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.Studio" class="control-label"></label>
+                <input asp-for="Game.Studio" class="form-control" />
+                <span asp-validation-for="Game.Studio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.Author" class="control-label"></label>
+                <input asp-for="Game.Author" class="form-control" />
+                <span asp-validation-for="Game.Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.Country" class="control-label"></label>
+                <input asp-for="Game.Country" class="form-control" />
+                <span asp-validation-for="Game.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.AnonceDate" class="control-label"></label>
+                <input asp-for="Game.AnonceDate" class="form-control" />
+                <span asp-validation-for="Game.AnonceDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.ReleaseDate" class="control-label"></label>
+                <input asp-for="Game.ReleaseDate" class="form-control" />
+                <span asp-validation-for="Game.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.CategoryId" class="control-label"></label>
+                <select asp-for="Game.CategoryId" class="form-control" asp-items="ViewBag.CategoryName"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.GenreId" class="control-label"></label>
+                <select asp-for="Game.GenreId" class="form-control" asp-items="ViewBag.GenreName"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.ModeId" class="control-label"></label>
+                <select asp-for="Game.ModeId" class="form-control" asp-items="ViewBag.ModeName"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.PlatformId" class="control-label"></label>
+                <select asp-for="Game.PlatformId" class="form-control" asp-items="ViewBag.PlatformName"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.PhotoUrl" class="control-label"></label>
+                <input asp-for="FileManager.FormFile" type="file">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Games">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
