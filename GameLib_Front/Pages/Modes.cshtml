@@ -1,0 +1,41 @@
+﻿@page
+@model GameLib_Front.Pages.ModesModel
+@{
+    ViewData["Title"] = "Modes";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Modes</h1>
+<p>
+    <a asp-page="ModeCreate">Create Mode</a>
+</p>
+<form>
+    <p style="margin-top: 20px;">
+        Search: <input type="text" asp-for="SearchString" />
+        <input class="btn btn-custom" type="submit" value="Search" />
+    </p>
+</form>
+<table class="table custom-table"
+       <thead>
+           <tr>
+               <th>
+                   @Html.DisplayNameFor(model => model.Modes.ElementAt(0).Name)
+               </th>
+               <th></th>
+           </tr>
+       </thead>
+       <tbody>
+           @foreach (var mode in Model.Modes)
+           {
+               <tr>
+                   <td>
+                       @Html.DisplayFor(item => mode.Name)
+                   </td>
+                   <td>
+                       <a asp-page="./ModeEdit" asp-route-id="@mode.Id">Edit</a>
+                       <a asp-page="./ModeDelete" asp-route-id="@mode.Id">Delete</a>
+                   </td>
+               </tr>
+           }
+       </tbody>
+</table>

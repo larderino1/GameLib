@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DbManager.Models;
-using GameLib_Front.Services.GenreServices;
+using GameLib_Front.Services.ModeServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GameLib_Front.Pages
 {
-    public class GenreEditModel : PageModel
+    public class ModeEditModel : PageModel
     {
         [BindProperty]
-        public Genre Genre { get; set; }
+        public Mode Mode { get; set; }
 
-        private readonly IGenreServices _genreService;
+        private readonly IModeServices _modeService;
 
-        public GenreEditModel(IGenreServices genreService)
+        public ModeEditModel(IModeServices modeService)
         {
-            _genreService = genreService;
+            _modeService = modeService;
         }
 
         public async Task<IActionResult> OnGet(Guid id)
@@ -28,9 +28,9 @@ namespace GameLib_Front.Pages
                 return BadRequest();
             }
 
-            Genre = await _genreService.GetGenreByIdAsync(id);
+            Mode = await _modeService.GetModeByIdAsync(id);
 
-            if(Genre == null)
+            if(Mode == null)
             {
                 return NotFound();
             }
@@ -47,14 +47,14 @@ namespace GameLib_Front.Pages
 
             try
             {
-                await _genreService.UpdateGenreAsync(Genre.Id, Genre);
+                await _modeService.UpdateModeAsync(Mode.Id, Mode);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }
 
-            return RedirectToPage("./Genres");
+            return RedirectToPage("./Modes");
         }
     }
 }
