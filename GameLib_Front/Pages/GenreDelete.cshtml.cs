@@ -3,34 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DbManager.Models;
-using GameLib_Front.Services.CategoryServices;
+using GameLib_Front.Services.GenreServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GameLib_Front.Pages
 {
-    public class CategoryDeleteModel : PageModel
+    public class GenreDeleteModel : PageModel
     {
         [BindProperty]
-        public Category Category { get; set; }
+        public Genre Genre { get; set; }
 
-        private readonly ICategoryServices _categoryService;
+        private readonly IGenreServices _genreService;
 
-        public CategoryDeleteModel(ICategoryServices categoryService)
+        public GenreDeleteModel(IGenreServices genreService)
         {
-            _categoryService = categoryService;
+            _genreService = genreService;
         }
 
         public async Task<IActionResult> OnGet(Guid id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return BadRequest();
             }
 
-            Category = await _categoryService.GetCategoryByIdAsync(id);
+            Genre = await _genreService.GetGenreByIdAsync(id);
 
-            if(Category == null)
+            if(Genre == null)
             {
                 return NotFound();
             }
@@ -40,14 +40,14 @@ namespace GameLib_Front.Pages
 
         public async Task<IActionResult> OnPost(Guid id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return BadRequest();
             }
 
-            await _categoryService.DeleteCategoryAsync(id);
+            await _genreService.DeleteGenreAsync(id);
 
-            return RedirectToPage("./Categories");
+            return RedirectToPage("./Genres");
         }
     }
 }

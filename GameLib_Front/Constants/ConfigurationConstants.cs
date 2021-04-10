@@ -12,5 +12,7 @@ namespace GameLib_Front.Constants
         public const string ContainerName = nameof(ContainerName);
 
         public const string UserDataDbConnectionString = nameof(UserDataDbConnectionString);
+
+        public const string GameLibServerUri = nameof(GameLibServerUri);
     }
 }

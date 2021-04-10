@@ -1,0 +1,26 @@
+﻿@page
+@model GameLib_Front.Pages.GenreDeleteModel
+@{
+    ViewData["Title"] = "Delete Genre";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Are you sure you want to delete this genre ?</h2>
+<div>
+    <h4>Genre Info</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Genre.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Genre.Name)
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="Genre.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Genres">Back to List</a>
+    </form>
+</div>

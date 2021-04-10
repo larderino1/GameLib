@@ -1,27 +1,27 @@
 ﻿@page
-@model GameLib_Front.Pages.CategoryCreateModel
+@model GameLib_Front.Pages.GenreEditModel
 @{
-    ViewData["Title"] = "Create Category";
+    ViewData["Title"] = "Edit Genre";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Create Category</h1>
+<h1>Edit Genre</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Category.Name" class="control-label"></label>
-                <input asp-for="Category.Name" class="form-control" />
-                <span asp-validation-for="Category.Name" class="text-danger"></span>
+                <label asp-for="Genre.Name" class="control-label"></label>
+                <input asp-for="Genre.Name" class="form-control" />
+                <span asp-validation-for="Genre.Name" class="text-danger"></span>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-page="Categories">Back to List</a>
+    <a asp-page="Genres">Back to List</a>
 </div>
 
 @section Scripts {
