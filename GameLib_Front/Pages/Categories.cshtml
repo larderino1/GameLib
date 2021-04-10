@@ -1,0 +1,41 @@
+﻿@page
+@model GameLib_Front.Pages.CategoriesModel
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Categories</h1>
+<p>
+    <a asp-page="CategoryCreate">Create Category</a>
+</p>
+<form>
+    <p style="margin-top: 20px;">
+        Search: <input type="text" asp-for="SearchString" />
+        <input class="btn btn-custom" type="submit" value="Search" />
+    </p>
+</form>
+<table class="table custom-table"
+       <thead>
+           <tr>
+               <th>
+                   @Html.DisplayNameFor(model => model.Categories.ElementAt(0).Name)
+               </th>
+               <th></th>
+           </tr>
+       </thead>
+       <tbody>
+           @foreach (var category in Model.Categories)
+           {
+               <tr>
+                   <td>
+                       @Html.DisplayFor(item => category.Name)
+                   </td>
+                   <td>
+                       <a asp-page="./CategoryEdit" asp-route-id="@category.Id">Edit</a>
+                       <a asp-page="./CategoryDelete" asp-route-id="@category.Id">Delete</a>
+                   </td>
+               </tr>
+           }
+       </tbody>
+</table>
