@@ -1,3 +1,4 @@
+using GameLib_Front.Constants;
 using GameLib_Front.Data;
 using GameLib_Front.Services.CategoryServices;
 using GameLib_Front.Services.GameServices;
@@ -5,6 +6,7 @@ using GameLib_Front.Services.GenreServices;
 using GameLib_Front.Services.ModeServices;
 using GameLib_Front.Services.PlatformServices;
 using GameLib_Front.Services.RoleService;
+using GameLib_Front.Services.StorageServices;
 using GameLib_Front.Services.UserService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,9 +39,15 @@ namespace GameLib_Front
         {
             services.AddDbContext<UserDataDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("UserDataDbConnectionString")));
+                    Configuration.GetConnectionString(ConfigurationConstants.UserDataDbConnectionString)));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<UserDataDbContext>();
+
+            services.AddAzureClients(builder =>
+            {
+                builder.AddBlobServiceClient(
+                    Configuration.GetConnectionString(ConfigurationConstants.StorageAccountConnectionString));
+            });
 
             services.AddHttpClient();
 
@@ -85,6 +94,7 @@ namespace GameLib_Front
             services.AddScoped<IGenreServices, GenreServices>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IStorageService, StorageService>();
         }
     }
 }

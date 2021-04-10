@@ -1,0 +1,70 @@
+﻿@page
+@model GameLib_Front.Pages.GamesModel
+@{
+    ViewData["Title"] = "Games";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1> This is GameLib </h1>
+
+<p>
+    <a asp-page="GameCreate">Create Game</a>
+</p>
+<form>
+    <p style="margin-top: 20px;">
+        Search: <input type="text" asp-for="SearchString" />
+        <input class="btn btn-custom" type="submit" value="Search" />
+    </p>
+</form>
+<table class="table custom-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Games.ElementAt(0).PhotoUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Games.ElementAt(0).Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Games.ElementAt(0).Mode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Games.ElementAt(0).Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Games.ElementAt(0).Category)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Games)
+        {
+        <tr>
+            <td>
+                <img class="img-thumbnail" src="@item.PhotoUrl" width="100" height="100" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mode.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre.Name)
+            </td>
+            <td>
+                <a href="@Url.Page("", new {CategoryId = item.Category.Id})">@Html.DisplayFor(modelItem => item.Category.Name)</a>
+            </td>
+            <td>
+                @if (User.IsInRole(RoleConstants.AdminRole))
+                {
+                    <a asp-page="./GameEdit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-page="./GameDelete" asp-route-id="@item.Id">Delete</a>
+                }
+                <a asp-page="./GameDetails" asp-route-id="@item.Id">Details</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
