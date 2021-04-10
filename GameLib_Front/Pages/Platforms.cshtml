@@ -1,0 +1,41 @@
+﻿@page
+@model GameLib_Front.Pages.PlatformsModel
+@{
+    ViewData["Title"] = "Platforms";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Platforms</h1>
+<p>
+    <a asp-page="PlatformCreate">Create Platform</a>
+</p>
+<form>
+    <p style="margin-top: 20px;">
+        Search: <input type="text" asp-for="SearchString" />
+        <input class="btn btn-custom" type="submit" value="Search" />
+    </p>
+</form>
+<table class="table custom-table"
+       <thead>
+           <tr>
+               <th>
+                   @Html.DisplayNameFor(model => model.Platforms.ElementAt(0).Name)
+               </th>
+               <th></th>
+           </tr>
+       </thead>
+       <tbody>
+           @foreach (var platform in Model.Platforms)
+           {
+               <tr>
+                   <td>
+                       @Html.DisplayFor(item => platform.Name)
+                   </td>
+                   <td>
+                       <a asp-page="./PlatformEdit" asp-route-id="@platform.Id">Edit</a>
+                       <a asp-page="./PlatformDelete" asp-route-id="@platform.Id">Delete</a>
+                   </td>
+               </tr>
+           }
+       </tbody>
+</table>
