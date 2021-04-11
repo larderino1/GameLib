@@ -70,7 +70,12 @@ namespace GameLib_Front.Services.GameServices
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<Game>(await response.Content.ReadAsStringAsync());
+                var game = JsonConvert.DeserializeObject<Game>(await response.Content.ReadAsStringAsync());
+
+                game.Genre = await _genreService.GetGenreByIdAsync(game.GenreId);
+                game.Mode = await _modeService.GetModeByIdAsync(game.ModeId);
+                game.Platform = await _platformService.GetPlatformByIdAsync(game.PlatformId);
+                game.Category = await _categoryService.GetCategoryByIdAsync(game.CategoryId);
             }
 
             return null;
