@@ -50,6 +50,7 @@ namespace GameLib_Front.Pages
 
             try
             {
+                Platform.Id = id;
                 await _platformService.UpdatePlatformAsync(id, Platform);
             }
             catch(Exception ex)

@@ -97,6 +97,7 @@ namespace GameLib_Front.Pages
 
             try
             {
+                Game.Id = id;
                 Game.PhotoUrl = await _storageService.UploadPhoto(FileManager.FormFile);
                 await _gameService.UpdateGameAsync(id, Game);
             }

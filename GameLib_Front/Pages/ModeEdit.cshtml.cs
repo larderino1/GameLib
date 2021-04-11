@@ -50,6 +50,7 @@ namespace GameLib_Front.Pages
 
             try
             {
+                Mode.Id = id;
                 await _modeService.UpdateModeAsync(id, Mode);
             }
             catch (Exception ex)

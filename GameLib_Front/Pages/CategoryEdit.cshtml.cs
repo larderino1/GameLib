@@ -50,6 +50,7 @@ namespace GameLib_Front.Pages
 
             try
             {
+                Category.Id = id;
                 await _categoryService.UpdateCategoryAsync(id, Category);
             }
             catch(Exception ex)

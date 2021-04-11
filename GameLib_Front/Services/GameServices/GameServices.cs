@@ -72,7 +72,7 @@ namespace GameLib_Front.Services.GameServices
             var gameJson = JsonConvert.SerializeObject(game);
 
             var response = await _httpClient.PutAsync(
-                $"{_baseAdress}/games/id",
+                $"{_baseAdress}/games/{id}",
                 new StringContent(gameJson, Encoding.UTF8, "application/json"));
 
             return response.IsSuccessStatusCode;

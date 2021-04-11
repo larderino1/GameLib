@@ -50,6 +50,7 @@ namespace GameLib_Front.Pages
 
             try
             {
+                Genre.Id = id;
                 await _genreService.UpdateGenreAsync(id, Genre);
             }
             catch(Exception ex)

@@ -72,7 +72,7 @@ namespace GameLib_Front.Services.ModeServices
             var modeJson = JsonConvert.SerializeObject(mode);
 
             var response = await _httpClient.PutAsync(
-                $"{_baseAdress}/modes/id",
+                $"{_baseAdress}/modes/{id}",
                 new StringContent(modeJson, Encoding.UTF8, "application/json"));
 
             return response.IsSuccessStatusCode;

@@ -72,7 +72,7 @@ namespace GameLib_Front.Services.PlatformServices
             var platformJson = JsonConvert.SerializeObject(platform);
 
             var response = await _httpClient.PutAsync(
-                $"{_baseAdress}/platforms/id",
+                $"{_baseAdress}/platforms/{id}",
                 new StringContent(platformJson, Encoding.UTF8, "application/json"));
 
             return response.IsSuccessStatusCode;

@@ -72,7 +72,7 @@ namespace GameLib_Front.Services.GenreServices
             var genreJson = JsonConvert.SerializeObject(genre);
 
             var response = await _httpClient.PutAsync(
-                $"{_baseAdress}/genres/id",
+                $"{_baseAdress}/genres/{id}",
                 new StringContent(genreJson, Encoding.UTF8, "application/json"));
 
             return response.IsSuccessStatusCode;
