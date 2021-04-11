@@ -18,5 +18,9 @@ namespace GameLib_Front.Constants
         public const string SendGridKey = nameof(SendGridKey);
 
         public const string OrganizationEmail = nameof(OrganizationEmail);
+
+        public const string MicrosoftClientId = nameof(MicrosoftClientId);
+
+        public const string MicrosoftClientSecret = nameof(MicrosoftClientSecret);
     }
 }

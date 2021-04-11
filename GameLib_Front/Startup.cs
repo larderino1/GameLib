@@ -72,7 +72,11 @@ namespace GameLib_Front
                     policy => policy.RequireRole(RoleConstants.AdminRole));
             });
 
-            services.AddAuthentication();
+            services.AddAuthentication().AddMicrosoftAccount(options => 
+            {
+                options.ClientId = Configuration.GetConnectionString(ConfigurationConstants.MicrosoftClientId);
+                options.ClientSecret = Configuration.GetConnectionString(ConfigurationConstants.MicrosoftClientSecret);
+            });
 
             services.AddRazorPages();
         }
