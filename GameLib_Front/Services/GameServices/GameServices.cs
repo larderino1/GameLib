@@ -76,6 +76,8 @@ namespace GameLib_Front.Services.GameServices
                 game.Mode = await _modeService.GetModeByIdAsync(game.ModeId);
                 game.Platform = await _platformService.GetPlatformByIdAsync(game.PlatformId);
                 game.Category = await _categoryService.GetCategoryByIdAsync(game.CategoryId);
+
+                return game;
             }
 
             return null;
