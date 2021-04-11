@@ -1,4 +1,8 @@
 ﻿using DbManager.Models;
+using GameLib_Front.Services.CategoryServices;
+using GameLib_Front.Services.GenreServices;
+using GameLib_Front.Services.ModeServices;
+using GameLib_Front.Services.PlatformServices;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -14,12 +18,29 @@ namespace GameLib_Front.Services.GameServices
     {
         private readonly HttpClient _httpClient;
 
+        private readonly IGenreServices _genreService;
+
+        private readonly IModeServices _modeService;
+
+        private readonly IPlatformServices _platformService;
+
+        private readonly ICategoryServices _categoryService;
+
         private readonly string _baseAdress;
 
         public GameServices(
             IHttpClientFactory httpClientFactory,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IGenreServices genreService,
+            IModeServices modeService,
+            IPlatformServices platformService,
+            ICategoryServices categoryService)
         {
+            _genreService = genreService;
+            _modeService = modeService;
+            _platformService = platformService;
+            _categoryService = categoryService;
+
             _httpClient = httpClientFactory.CreateClient();
 
             _baseAdress = configuration.GetConnectionString("GameLibServerUri");
@@ -61,7 +82,17 @@ namespace GameLib_Front.Services.GameServices
 
             if (response.IsSuccessStatusCode)
             {
-                return JsonConvert.DeserializeObject<IEnumerable<Game>>(await response.Content.ReadAsStringAsync());
+                var games = JsonConvert.DeserializeObject<IEnumerable<Game>>(await response.Content.ReadAsStringAsync());
+
+                foreach(var game in games)
+                {
+                    game.Genre = await _genreService.GetGenreByIdAsync(game.GenreId);
+                    game.Mode = await _modeService.GetModeByIdAsync(game.ModeId);
+                    game.Platform = await _platformService.GetPlatformByIdAsync(game.PlatformId);
+                    game.Category = await _categoryService.GetCategoryByIdAsync(game.CategoryId);
+                }
+
+                return games;
             }
 
             return Enumerable.Empty<Game>();
