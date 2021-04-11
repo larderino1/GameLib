@@ -1,6 +1,5 @@
 ﻿using DbManager.Data;
 using DbManager.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,7 +25,7 @@ namespace GameLib_Back.Services.ModeServices
                 await _context.Modes.AddAsync(mode);
                 await _context.SaveChangesAsync();
             }
-            catch(ArgumentNullException ex)
+            catch (ArgumentNullException ex)
             {
                 throw new ArgumentNullException("Mode can`t be null", ex.InnerException);
             }
@@ -38,7 +37,7 @@ namespace GameLib_Back.Services.ModeServices
         {
             var mode = await _context.Modes.FindAsync(id);
 
-            if(mode == null)
+            if (mode == null)
             {
                 return mode;
             }

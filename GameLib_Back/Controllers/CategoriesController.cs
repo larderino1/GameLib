@@ -1,13 +1,10 @@
-﻿using System;
+﻿using DbManager.Models;
+using GameLib_Back.Services.CategoryServices;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DbManager.Data;
-using DbManager.Models;
-using GameLib_Back.Services.CategoryServices;
 
 namespace GameLib_Back.Controllers
 {
@@ -28,7 +25,7 @@ namespace GameLib_Back.Controllers
         {
             var categories = await _categoryService.GetCategoryListAsync();
 
-            if(categories == null || categories.Count() == 0)
+            if (categories == null || categories.Count() == 0)
             {
                 return NoContent();
             }
@@ -93,7 +90,7 @@ namespace GameLib_Back.Controllers
         {
             var category = await _categoryService.DeleteCategoryAsync(id);
 
-            if(category == null)
+            if (category == null)
             {
                 return NotFound();
             }

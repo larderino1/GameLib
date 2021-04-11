@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DbManager.Models;
 using GameLib_Front.Constants;
 using GameLib_Front.Services.PlatformServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GameLib_Front.Pages
 {
@@ -31,7 +30,7 @@ namespace GameLib_Front.Pages
         {
             Platforms = await _platformService.GetPlatformsListAsync();
 
-            if(Platforms == null)
+            if (Platforms == null)
             {
                 Platforms = new List<Platform>();
             }

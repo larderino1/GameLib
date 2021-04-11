@@ -11,9 +11,7 @@ using GameLib_Front.Services.StorageServices;
 using GameLib_Front.Services.UserService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
@@ -21,8 +19,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GameLib_Front
@@ -61,7 +57,8 @@ namespace GameLib_Front
 
             CreateRoles(serviceProvider).GetAwaiter().GetResult();
 
-            services.ConfigureApplicationCookie(o => {
+            services.ConfigureApplicationCookie(o =>
+            {
                 o.ExpireTimeSpan = TimeSpan.FromDays(5);
                 o.SlidingExpiration = true;
             });
@@ -72,7 +69,7 @@ namespace GameLib_Front
                     policy => policy.RequireRole(RoleConstants.AdminRole));
             });
 
-            services.AddAuthentication().AddMicrosoftAccount(options => 
+            services.AddAuthentication().AddMicrosoftAccount(options =>
             {
                 options.ClientId = Configuration.GetConnectionString(ConfigurationConstants.MicrosoftClientId);
                 options.ClientSecret = Configuration.GetConnectionString(ConfigurationConstants.MicrosoftClientSecret);

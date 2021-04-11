@@ -1,13 +1,10 @@
-﻿using System;
+﻿using DbManager.Models;
+using GameLib_Back.Services.GameServices;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DbManager.Data;
-using DbManager.Models;
-using GameLib_Back.Services.GameServices;
 
 namespace GameLib_Back.Controllers
 {
@@ -28,7 +25,7 @@ namespace GameLib_Back.Controllers
         {
             var games = await _gamesService.GetGameListAsync();
 
-            if(games == null || games.Count() == 0)
+            if (games == null || games.Count() == 0)
             {
                 return NoContent();
             }
@@ -81,7 +78,7 @@ namespace GameLib_Back.Controllers
             {
                 await _gamesService.CreateGameAsync(game);
             }
-            catch(ArgumentNullException ex)
+            catch (ArgumentNullException ex)
             {
                 return BadRequest(ex.Message);
             }

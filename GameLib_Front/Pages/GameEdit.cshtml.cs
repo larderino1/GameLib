@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DbManager.Models;
 using GameLib_Front.Constants;
 using GameLib_Front.Data.Models;
@@ -15,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Threading.Tasks;
 
 namespace GameLib_Front.Pages
 {
@@ -57,14 +55,14 @@ namespace GameLib_Front.Pages
 
         public async Task<IActionResult> OnGet(Guid id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return BadRequest();
             }
 
             Game = await _gameService.GetGameByIdAsync(id);
 
-            if(Game == null)
+            if (Game == null)
             {
                 return NotFound();
             }
@@ -101,7 +99,7 @@ namespace GameLib_Front.Pages
                 Game.PhotoUrl = await _storageService.UploadPhoto(FileManager.FormFile);
                 await _gameService.UpdateGameAsync(id, Game);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }

@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DbManager.Models;
 using GameLib_Front.Constants;
 using GameLib_Front.Services.GenreServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Threading.Tasks;
 
 namespace GameLib_Front.Pages
 {
@@ -40,7 +38,7 @@ namespace GameLib_Front.Pages
             {
                 await _genreService.CreateGenreAsync(Genre);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }

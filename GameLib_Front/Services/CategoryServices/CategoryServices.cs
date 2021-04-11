@@ -30,7 +30,7 @@ namespace GameLib_Front.Services.CategoryServices
             var categoryJson = JsonConvert.SerializeObject(category);
 
             var response = await _httpClient.PostAsync(
-                $"{_baseAdress}/categories", 
+                $"{_baseAdress}/categories",
                 new StringContent(categoryJson, Encoding.UTF8, "application/json"));
 
             return response.IsSuccessStatusCode;

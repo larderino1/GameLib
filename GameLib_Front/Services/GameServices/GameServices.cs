@@ -91,7 +91,7 @@ namespace GameLib_Front.Services.GameServices
             {
                 var games = JsonConvert.DeserializeObject<IEnumerable<Game>>(await response.Content.ReadAsStringAsync());
 
-                foreach(var game in games)
+                foreach (var game in games)
                 {
                     game.Genre = await _genreService.GetGenreByIdAsync(game.GenreId);
                     game.Mode = await _modeService.GetModeByIdAsync(game.ModeId);

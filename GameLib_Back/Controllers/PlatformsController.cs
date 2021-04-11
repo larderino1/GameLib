@@ -1,13 +1,10 @@
-﻿using System;
+﻿using DbManager.Models;
+using GameLib_Back.Services.PlatformServices;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DbManager.Data;
-using DbManager.Models;
-using GameLib_Back.Services.PlatformServices;
 
 namespace GameLib_Back.Controllers
 {
@@ -79,7 +76,7 @@ namespace GameLib_Back.Controllers
             {
                 await _platformService.CreatePlatformAsync(platform);
             }
-            catch(ArgumentNullException ex)
+            catch (ArgumentNullException ex)
             {
                 return BadRequest(ex.Message);
             }

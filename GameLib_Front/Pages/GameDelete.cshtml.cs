@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DbManager.Models;
 using GameLib_Front.Constants;
 using GameLib_Front.Services.GameServices;
@@ -9,6 +5,8 @@ using GameLib_Front.Services.StorageServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.Threading.Tasks;
 
 namespace GameLib_Front.Pages
 {
@@ -33,14 +31,14 @@ namespace GameLib_Front.Pages
 
         public async Task<IActionResult> OnGet(Guid id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return BadRequest();
             }
 
             Game = await _gameService.GetGameByIdAsync(id);
 
-            if(Game == null)
+            if (Game == null)
             {
                 return NotFound();
             }
@@ -50,7 +48,7 @@ namespace GameLib_Front.Pages
 
         public async Task<IActionResult> OnPost(Guid id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return BadRequest();
             }

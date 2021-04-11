@@ -3,9 +3,7 @@ using GameLib_Front.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GameLib_Front.Services.StorageServices
@@ -15,7 +13,7 @@ namespace GameLib_Front.Services.StorageServices
         private readonly BlobServiceClient _blobServiceClient;
 
         private readonly string _containerName;
-        
+
         public StorageService(
             BlobServiceClient blobServiceClient,
             IConfiguration config)
