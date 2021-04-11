@@ -41,7 +41,7 @@ namespace GameLib_Front.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace GameLib_Front.Pages
 
             try
             {
-                await _modeService.UpdateModeAsync(Mode.Id, Mode);
+                await _modeService.UpdateModeAsync(id, Mode);
             }
             catch (Exception ex)
             {

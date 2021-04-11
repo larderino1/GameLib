@@ -41,7 +41,7 @@ namespace GameLib_Front.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +50,7 @@ namespace GameLib_Front.Pages
 
             try
             {
-                await _genreService.UpdateGenreAsync(Genre.Id, Genre);
+                await _genreService.UpdateGenreAsync(id, Genre);
             }
             catch(Exception ex)
             {

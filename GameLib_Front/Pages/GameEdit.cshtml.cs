@@ -88,7 +88,7 @@ namespace GameLib_Front.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(Guid id)
         {
             if (!ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace GameLib_Front.Pages
             try
             {
                 Game.PhotoUrl = await _storageService.UploadPhoto(FileManager.FormFile);
-                await _gameService.UpdateGameAsync(Game.Id, Game);
+                await _gameService.UpdateGameAsync(id, Game);
             }
             catch(Exception ex)
             {
