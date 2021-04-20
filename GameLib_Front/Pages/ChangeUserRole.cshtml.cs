@@ -54,7 +54,7 @@ namespace GameLib_Front.Pages
         {
             var userRole = await _roleService.GetRoleByIdAsync(role.Id);
 
-            await _userService.UpdateUserRole(_name, _role, role.Name);
+            await _userService.UpdateUserRole(_name, _role, userRole.Name);
 
             return RedirectToPage("./AdminPage");
         }
